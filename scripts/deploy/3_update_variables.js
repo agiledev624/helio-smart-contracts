@@ -29,7 +29,7 @@ async function main() {
   let abaci = await this.Abaci.attach("");
   // let vow = await this.Vow.attach("");
 
-  // Variables Upadate
+  // Variables Update
   console.log("Vat Update...");
   await vat["file(bytes32,uint256)"](ethers.utils.formatBytes32String("Line"), "5000000" + rad);
   await vat["file(bytes32,bytes32,uint256)"](ilkCE, ethers.utils.formatBytes32String("line"), "5000000" + rad);

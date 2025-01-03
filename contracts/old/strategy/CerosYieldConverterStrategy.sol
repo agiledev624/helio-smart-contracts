@@ -125,12 +125,12 @@ contract CerosYieldConverterStrategy is BaseStrategy {
         return amount - _binancePool.getRelayerFee();
     }
 
-    /// @dev claims yeild from ceros in aBNBc and transfers to feeRecipient
+    /// @dev claims yield from ceros in aBNBc and transfers to feeRecipient
     function harvest() external onlyStrategist {
         _harvestTo(rewards);
     }
 
-    /// @dev internal function to claim yeild from ceros in aBNBc and transfer them to desired address
+    /// @dev internal function to claim yield from ceros in aBNBc and transfer them to desired address
     function _harvestTo(address to) private returns(uint256 yield) {
         yield = _ceRouter.getYieldFor(address(this));
         if(yield > 0) {

@@ -96,7 +96,7 @@ contract BoundValidator is OwnableUpgradeable, BoundValidatorInterface {
    * @notice Test whether the reported price is within the valid bounds
      * @param asset Asset address
      * @param reportedPrice The price to be tested
-     * @param anchorPrice The reported price must be within the the valid bounds of this price
+     * @param anchorPrice The reported price must be within the valid bounds of this price
      */
   function _isWithinAnchor(address asset, uint256 reportedPrice, uint256 anchorPrice) private view returns (bool) {
     if (reportedPrice != 0) {
