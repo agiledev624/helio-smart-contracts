@@ -8,8 +8,6 @@ interface IBaseStrategy {
     // to deposit funds to a destination contract
     function deposit() payable external returns(uint256);
 
-    function depositAll() external;
-
     // to withdraw funds from the destination contract
     function withdraw(address recipient, uint256 amount) external returns(uint256);
 

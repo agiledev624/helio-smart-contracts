@@ -71,11 +71,6 @@ contract SnBnbYieldConverterStrategy is BaseStrategy {
         return _deposit(amount);
     }
 
-    /// @dev deposits all the available BNB(extraBNB if any + BNB passed) into Synclub stakeManager
-    function depositAll() external nonReentrant onlyStrategist {
-        _deposit(address(this).balance - bnbToDistribute);
-    }
-
     /// @dev internal function to deposit the given amount of BNB into Synclub stakeManager
     /// @param amount amount of BNB to deposit
     function _deposit(uint256 amount)
@@ -202,7 +197,8 @@ contract SnBnbYieldConverterStrategy is BaseStrategy {
                 idx++;
                 continue;
             }
-            bnbToDistribute += amount; // amount here returned from Synclub will be a little more than requested to withdraw BNB:snBNB > 1 ?
+
+            // update bnbToDistribute in receive()
             _stakeManager.claimWithdraw(idx);
             return true;
         }
@@ -333,4 +329,17 @@ contract SnBnbYieldConverterStrategy is BaseStrategy {
         return requests;
     }
 
+    receive() external payable override {
+        require(
+            msg.sender == destination ||
+            msg.sender == strategist,
+            "invalid sender"
+        );
+
+        if (msg.sender == destination) {
+            // The amount transferred from Synclub may be a little more than the users' withdrawal requests
+            // due to possible increases in the snBNB:BNB exchange rate.
+            bnbToDistribute += msg.value;
+        }
+    }
 }
